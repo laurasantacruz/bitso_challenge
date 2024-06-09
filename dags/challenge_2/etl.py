@@ -4,11 +4,15 @@ Created: June 8th 2024
 '''
 from airflow import DAG   
 from airflow.operators.dummy_operator import DummyOperator
+from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
+from scripts.etl_functions import *
 import pendulum
 
-# schedule to run every 10 minutes
+# schedule to run every day
 SCHEDULE_INTERVAL = "0 0 * * *"
+INPUT_BUCKET = 'bitso-lz'
+OUTPUT_BUCKET = 'bitso-challenge-output'
 
 default_args = {
     'owner': 'Laura',
@@ -31,3 +35,38 @@ with DAG(
 ) as dag:
     # dummies
     init = DummyOperator(task_id='init')
+    dim_dummy = DummyOperator(task_id ='dim_checkpoint')
+    end = DummyOperator(task_id='end')
+
+    build_user_dim = PythonOperator(
+        task_id='user_dim',
+        python_callable=build_user_dim,
+        op_kwargs={'input_bucket': INPUT_BUCKET,
+                   'output_bucket': OUTPUT_BUCKET}
+    )
+
+    build_time_dim = PythonOperator(
+        task_id='time_dim',
+        python_callable=build_time_dim,
+        op_kwargs={'input_bucket': INPUT_BUCKET,
+                   'output_bucket': OUTPUT_BUCKET}
+    )
+
+    build_logins_fact = PythonOperator(
+        task_id='logins_fact',
+        python_callable=build_logins_fact,
+        op_kwargs={'input_bucket': INPUT_BUCKET,
+                   'output_bucket': OUTPUT_BUCKET}
+    )
+
+    build_transactions_fact = PythonOperator(
+        task_id='transactions_fact',
+        python_callable=build_transactions_fact,
+        op_kwargs={'input_bucket': INPUT_BUCKET,
+                   'output_bucket': OUTPUT_BUCKET}
+    )
+
+    init >> [build_user_dim, build_time_dim] >> dim_dummy
+    dim_dummy >> [build_logins_fact, build_transactions_fact] >> end
+
+
