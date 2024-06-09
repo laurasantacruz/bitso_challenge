@@ -1,15 +1,14 @@
 '''
-DAG to get monitor the bid-ask spread from order books 
-Created: June 7th 2024
+ETL of deposit, withdrawal, event and user. Create fact and dim tables.
+Created: June 8th 2024
 '''
 from airflow import DAG   
 from airflow.operators.dummy_operator import DummyOperator
 from datetime import datetime, timedelta
-from scripts import get_data_from_api
 import pendulum
 
 # schedule to run every 10 minutes
-SCHEDULE_INTERVAL = "*/10 * * * *"
+SCHEDULE_INTERVAL = "0 0 * * *"
 
 default_args = {
     'owner': 'Laura',
@@ -25,13 +24,10 @@ default_args = {
 }
 
 with DAG(   
-    dag_id="bid_ask_spread",
+    dag_id="fact_dim_etl",
     default_args=default_args,
     description='pipeline',
     schedule_interval=SCHEDULE_INTERVAL
 ) as dag:
     # dummies
     init = DummyOperator(task_id='init')
-
-    
-
