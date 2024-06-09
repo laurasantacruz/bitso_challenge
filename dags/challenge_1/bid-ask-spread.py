@@ -5,8 +5,7 @@ Created: June 7th 2024
 from airflow import DAG   
 from airflow.operators.dummy_operator import DummyOperator
 from datetime import datetime, timedelta
-import requests
-import json
+from scripts import get_data_from_api
 import pendulum
 
 # schedule to run every 10 minutes
