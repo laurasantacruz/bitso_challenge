@@ -13,7 +13,7 @@ WITH SERDEPROPERTIES (
   'field.delim' = ','
 )
 STORED AS TEXTFILE
-LOCATION 's3://bitso-challenge-output/dim/'
+LOCATION 's3://bitso-challenge-output/dim/date/'
 TBLPROPERTIES (
   'skip.header.line.count' = '1'
 );
