@@ -2,3 +2,6 @@ boto3
 s3fs
 requests
 pandas
+dotenv
+os
+csv
