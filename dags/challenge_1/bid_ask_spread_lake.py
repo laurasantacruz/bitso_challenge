@@ -50,6 +50,10 @@ def calculate_spread(bucket_name, prefix):
 
     spread = abs((float(lowest_ask_price) - float(highest_bid_price))*100 / float(lowest_ask_price))
 
+    if spread > 0.1 or spread > 1.0  or spread > 0.5:
+        pass
+        # send email or Slack notification
+
 
 default_args = {
     'owner': 'airflow',
