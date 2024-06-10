@@ -4,9 +4,10 @@ Created: June 7th 2024
 '''
 from airflow import DAG   
 from airflow.operators.dummy_operator import DummyOperator
+from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
-from scripts import get_data_from_api
 import pendulum
+from scripts.api_call import *
 
 # schedule to run every 10 minutes
 SCHEDULE_INTERVAL = "*/10 * * * *"
@@ -32,6 +33,15 @@ with DAG(
 ) as dag:
     # dummies
     init = DummyOperator(task_id='init')
+    end = DummyOperator(task_id='end')
+
+    get_data_from_api_btc_mxn = PythonOperator(
+        task_id='get_data_btc_mxn',
+        python_callable=get_data_from_api,
+        op_kwargs={'book': 'btc_mxn'}
+    )
+
+    init >> get_data_from_api_btc_mxn >> end
 
     
 
