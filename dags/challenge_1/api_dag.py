@@ -26,7 +26,7 @@ default_args = {
 }
 
 with DAG(   
-    dag_id="bid_ask_spread",
+    dag_id="bid_ask_spread_api",
     default_args=default_args,
     description='pipeline',
     schedule_interval=SCHEDULE_INTERVAL
