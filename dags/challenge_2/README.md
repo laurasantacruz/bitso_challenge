@@ -1,6 +1,8 @@
 # Challenge 2
 
-You can find the ERD diagram of the data model on the gile `ERD_diagram.png`. <br><br>
+You can find the ERD diagram of the data model on the gile `ERD_diagram.png`.
+You can also find screenshot of the DAG and query results in the screenshots folder
+<br><br>
 Solution:
 Create a Star schema where the facts are: **logins** and **transactions**.<br> 
 Transactions fact include both deposits and withdrawals and to identify the type of transaction a column `transaction_type` 
