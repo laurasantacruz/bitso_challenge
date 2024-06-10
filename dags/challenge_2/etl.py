@@ -42,28 +42,32 @@ with DAG(
         task_id='user_dim',
         python_callable=build_user_dim,
         op_kwargs={'input_bucket': INPUT_BUCKET,
-                   'output_bucket': OUTPUT_BUCKET}
+                   'output_bucket': OUTPUT_BUCKET,
+                   'aws_conn_id':'aws_connection'}
     )
 
     build_time_dim = PythonOperator(
         task_id='time_dim',
         python_callable=build_time_dim,
         op_kwargs={'input_bucket': INPUT_BUCKET,
-                   'output_bucket': OUTPUT_BUCKET}
+                   'output_bucket': OUTPUT_BUCKET,
+                   'aws_conn_id':'aws_connection'}
     )
 
     build_logins_fact = PythonOperator(
         task_id='logins_fact',
         python_callable=build_logins_fact,
         op_kwargs={'input_bucket': INPUT_BUCKET,
-                   'output_bucket': OUTPUT_BUCKET}
+                   'output_bucket': OUTPUT_BUCKET,
+                   'aws_conn_id':'aws_connection'}
     )
 
     build_transactions_fact = PythonOperator(
         task_id='transactions_fact',
         python_callable=build_transactions_fact,
         op_kwargs={'input_bucket': INPUT_BUCKET,
-                   'output_bucket': OUTPUT_BUCKET}
+                   'output_bucket': OUTPUT_BUCKET,
+                   'aws_conn_id':'aws_connection'}
     )
 
     init >> [build_user_dim, build_time_dim] >> dim_dummy
