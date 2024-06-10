@@ -86,7 +86,7 @@ def build_transactions_fact(input_bucket, output_bucket, aws_conn_id):
 
    # rename columns
    transaction_fact_df.rename(columns = {'id':'transaction_id',
-                                         'event_timestamp':'login_timestamp', 
+                                         'event_timestamp':'transaction_timestamp', 
                                          'amount':'transaction_amount',
                                          'tx_status':'transaction_status'}, 
                                          inplace = True)
