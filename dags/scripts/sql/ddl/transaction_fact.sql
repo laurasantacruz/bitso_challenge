@@ -1,10 +1,10 @@
 CREATE EXTERNAL TABLE IF NOT EXISTS bitso_de_challenge.transaction_fact(
-    id int, 
-    event_timestamp string,
+    transaction_id int, 
+    transaction_timestamp string,
     user_id string, 
-    amount double, 
+    transaction_amount double, 
     currency string, 
-    tx_status string,
+    transaction_status string,
     transaction_type string,
     date_id int
   )

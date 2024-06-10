@@ -1,6 +1,6 @@
 CREATE EXTERNAL TABLE IF NOT EXISTS bitso_de_challenge.login_fact(
     id int, 
-    event_timestamp string,
+    login_timestamp string,
     user_id string, 
     date_id int
   )
@@ -10,7 +10,7 @@ WITH SERDEPROPERTIES (
   'field.delim' = ','
 )
 STORED AS TEXTFILE
-LOCATION 's3://bitso-challenge-output/fact/event/'
+LOCATION 's3://bitso-challenge-output/fact/login/'
 TBLPROPERTIES (
   'skip.header.line.count' = '1'
 );
